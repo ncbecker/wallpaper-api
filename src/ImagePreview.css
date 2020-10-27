@@ -1,0 +1,11 @@
+.imageContainer {
+  margin: 20px;
+  text-align: center;
+}
+
+.imageThumb {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  object-position: center;
+}
