@@ -1,20 +1,36 @@
+import { getRandomImage } from "./api/getRandomImage";
 import "./App.css";
 import Button from "./Button";
 import ImagePreview from "./ImagePreview";
+import React, { useState } from "react";
 
 function App() {
+  const [randomImage, setRandomImage] = useState(null);
+
+  async function handleClick() {
+    const randomImageResponse = await getRandomImage();
+    setRandomImage(randomImageResponse);
+  }
+
   return (
     <main>
-      <Button innerText={"GET RANDOM IMAGE"} />
-      <ImagePreview
-        src={
-          "https://images.unsplash.com/photo-1603726964374-b9f6e020f0e7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1834&q=80"
-        }
-        alt={"Surfer"}
-        author={"Unsplash"}
-      />
+      <Button onClick={() => handleClick()} innerText={"GET RANDOM IMAGE"} />
+      {randomImage && (
+        <ImagePreview
+          src={randomImage.urls.regular}
+          alt={randomImage.alt_description}
+          author={randomImage.user.name}
+        />
+      )}
     </main>
   );
 }
 
 export default App;
+
+// async function loadRandomImage() {
+//   const randomImage = await getRandomImage;
+//   return randomImage;
+// }
+
+// const randomImageInfo = loadRandomImage();
