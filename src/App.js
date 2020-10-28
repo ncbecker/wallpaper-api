@@ -13,8 +13,21 @@ function App() {
   }
 
   function handleClickFavorites() {
-    const oldFavorites = JSON.parse(localStorage.getItem("favorites")) || [];
-    const newFavorites = [...oldFavorites, randomImage.id];
+    let favorites = null;
+    const imageId = randomImage.id;
+    try {
+      favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+    } catch (error) {
+      // Parsing JSON might fail
+      console.error(error);
+      favorites = [];
+    }
+    if (favorites.includes(imageId)) {
+      // Already added to favorites; return = aborts whole onClick function
+      return;
+    }
+    // Add to a new array (not with .push method) to keep immutable
+    const newFavorites = [...favorites, imageId];
     localStorage.setItem("favorites", JSON.stringify(newFavorites));
   }
 
