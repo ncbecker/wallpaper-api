@@ -12,6 +12,12 @@ function App() {
     setRandomImage(randomImageResponse);
   }
 
+  function handleClickFavorites() {
+    const oldFavorites = JSON.parse(localStorage.getItem("favorites")) || [];
+    const newFavorites = [...oldFavorites, randomImage.id];
+    localStorage.setItem("favorites", JSON.stringify(newFavorites));
+  }
+
   return (
     <main>
       <Button onClick={() => handleClick()} innerText={"GET RANDOM IMAGE"} />
@@ -20,6 +26,7 @@ function App() {
           src={randomImage.urls.regular}
           alt={randomImage.alt_description}
           author={randomImage.user.name}
+          onClickFavorites={() => handleClickFavorites()}
         />
       )}
     </main>
