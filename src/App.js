@@ -3,6 +3,7 @@ import "./App.css";
 import Button from "./Button";
 import ImagePreview from "./ImagePreview";
 import React, { useState } from "react";
+import FavoriteImage from "./FavoriteImage";
 
 function App() {
   const [randomImage, setRandomImage] = useState(null);
@@ -42,6 +43,9 @@ function App() {
           onClickFavorites={() => handleClickFavorites()}
         />
       )}
+      <div>
+        <FavoriteImage />
+      </div>
     </main>
   );
 }
