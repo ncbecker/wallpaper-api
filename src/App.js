@@ -7,6 +7,9 @@ import FavoriteImageList from "./FavoriteImageList";
 
 function App() {
   const [randomImage, setRandomImage] = useState(null);
+  const [currentFavorits, setCurrentFavorits] = useState(
+    JSON.parse(localStorage.getItem("favorites")) || []
+  );
 
   async function handleClick() {
     const randomImageResponse = await getRandomImage();
@@ -29,10 +32,9 @@ function App() {
     }
     // Add to a new array (not .push method) to keep immutability
     const newFavorites = [...favorites, imageId];
+    setCurrentFavorits(newFavorites);
     localStorage.setItem("favorites", JSON.stringify(newFavorites));
   }
-
-  const photoIds = JSON.parse(localStorage.getItem("favorites")) || [];
 
   // const favoriteCards = photoIds.map((photoId) => (
   //   <FavoriteImage key={photoId.toString()} photoId={photoId} />
@@ -53,23 +55,9 @@ function App() {
           onClickFavorites={() => handleClickFavorites()}
         />
       )}
-      <div>
-        <FavoriteImageList photoIds={photoIds} />
-        {/* {favoriteCards} */}
-        {/* <createFavoriteCards /> */}
-        {/* <div>{favoriteCards}</div> */}
-        {/* {newFavorites.forEach(element => {}});} */}
-        {/* <FavoriteImage /> */}
-      </div>
+      <FavoriteImageList photoIds={currentFavorits} />
     </main>
   );
 }
 
 export default App;
-
-// async function loadRandomImage() {
-//   const randomImage = await getRandomImage;
-//   return randomImage;
-// }
-
-// const randomImageInfo = loadRandomImage();

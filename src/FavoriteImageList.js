@@ -1,9 +1,14 @@
 import React from "react";
 import FavoriteImage from "./FavoriteImage";
+import "./FavoriteImageList.css";
 
 export default function FavoriteImageList({ photoIds }) {
-  const favoriteCards = photoIds.map((photoId) => (
-    <FavoriteImage key={photoId.toString()} photoId={photoId} />
-  ));
-  return favoriteCards;
+  return (
+    <div className={"favoriteCardList"}>
+      {" "}
+      {photoIds.map((photoId) => (
+        <FavoriteImage key={photoId.toString()} photoId={photoId} />
+      ))}
+    </div>
+  );
 }
