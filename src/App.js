@@ -3,6 +3,7 @@ import "./App.css";
 import Button from "./Button";
 import ImagePreview from "./ImagePreview";
 import React, { useState } from "react";
+import FavoriteImage from "./FavoriteImage";
 
 function App() {
   const [randomImage, setRandomImage] = useState(null);
@@ -12,11 +13,36 @@ function App() {
     setRandomImage(randomImageResponse);
   }
 
+  //HIER LET; newFavorites als globale Variable
+  let newFavorites = [];
+
   function handleClickFavorites() {
-    const oldFavorites = JSON.parse(localStorage.getItem("favorites")) || [];
-    const newFavorites = [...oldFavorites, randomImage.id];
+    let favorites = null;
+    const imageId = randomImage.id;
+    try {
+      favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+    } catch (error) {
+      // Parsing JSON might fail
+      console.error(error);
+      favorites = [];
+    }
+    if (favorites.includes(imageId)) {
+      // Already added to favorites; return = aborts whole onClick function
+      return;
+    }
+    // Add to a new array (not .push method) to keep immutability
+    //STATT CONST; HIER LET NEU DEFINIEREN
+    newFavorites = [...favorites, imageId];
     localStorage.setItem("favorites", JSON.stringify(newFavorites));
   }
+
+  const favoriteCards = newFavorites.map((photoId) => (
+    <FavoriteImage key={photoId.toString()} photoId={photoId} />
+  ));
+
+  // function createFavoriteCards(photoId) {
+  //   newFavorites.forEach((photoId) => FavoriteImage(photoId));
+  // }
 
   return (
     <main>
@@ -29,6 +55,13 @@ function App() {
           onClickFavorites={() => handleClickFavorites()}
         />
       )}
+      <div>
+        {favoriteCards}
+        {/* <createFavoriteCards /> */}
+        {/* <div>{favoriteCards}</div> */}
+        {/* {newFavorites.forEach(element => {}});} */}
+        {/* <FavoriteImage /> */}
+      </div>
     </main>
   );
 }
