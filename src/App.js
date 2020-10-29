@@ -18,7 +18,6 @@ function App() {
 
   function handleClickFavorites() {
     let favorites = null;
-    const imageId = randomImage.id;
     try {
       favorites = JSON.parse(localStorage.getItem("favorites")) || [];
     } catch (error) {
@@ -26,23 +25,15 @@ function App() {
       console.error(error);
       favorites = [];
     }
-    if (favorites.includes(imageId)) {
+    if (favorites.includes(randomImage.id)) {
       // Already added to favorites; return = aborts whole onClick function
       return;
     }
     // Add to a new array (not .push method) to keep immutability
-    const newFavorites = [...favorites, imageId];
+    const newFavorites = [...favorites, randomImage.id];
     setCurrentFavorits(newFavorites);
     localStorage.setItem("favorites", JSON.stringify(newFavorites));
   }
-
-  // const favoriteCards = photoIds.map((photoId) => (
-  //   <FavoriteImage key={photoId.toString()} photoId={photoId} />
-  // ));
-
-  // function createFavoriteCards(photoId) {
-  //   newFavorites.forEach((photoId) => FavoriteImage(photoId));
-  // }
 
   return (
     <main>
