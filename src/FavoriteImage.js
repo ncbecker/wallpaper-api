@@ -7,7 +7,7 @@ export default function FavoriteImage({ photoId }) {
       <img
         className="favoriteCard__img"
         src={`https://source.unsplash.com/${photoId}`}
-        alt={"Unknown"}
+        alt={`Favorite ${photoId}`}
       />
     </div>
   );
