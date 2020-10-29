@@ -13,6 +13,9 @@ function App() {
     setRandomImage(randomImageResponse);
   }
 
+  //HIER LET; newFavorites als globale Variable
+  let newFavorites = [];
+
   function handleClickFavorites() {
     let favorites = null;
     const imageId = randomImage.id;
@@ -27,10 +30,19 @@ function App() {
       // Already added to favorites; return = aborts whole onClick function
       return;
     }
-    // Add to a new array (not with .push method) to keep immutable
-    const newFavorites = [...favorites, imageId];
+    // Add to a new array (not .push method) to keep immutability
+    //STATT CONST; HIER LET NEU DEFINIEREN
+    newFavorites = [...favorites, imageId];
     localStorage.setItem("favorites", JSON.stringify(newFavorites));
   }
+
+  const favoriteCards = newFavorites.map((photoId) => (
+    <FavoriteImage key={photoId.toString()} photoId={photoId} />
+  ));
+
+  // function createFavoriteCards(photoId) {
+  //   newFavorites.forEach((photoId) => FavoriteImage(photoId));
+  // }
 
   return (
     <main>
@@ -44,7 +56,11 @@ function App() {
         />
       )}
       <div>
-        <FavoriteImage />
+        {favoriteCards}
+        {/* <createFavoriteCards /> */}
+        {/* <div>{favoriteCards}</div> */}
+        {/* {newFavorites.forEach(element => {}});} */}
+        {/* <FavoriteImage /> */}
       </div>
     </main>
   );
