@@ -7,13 +7,19 @@ import FavoriteImageList from "./FavoriteImageList";
 
 function App() {
   const [randomImage, setRandomImage] = useState(null);
-  const [currentFavorits, setCurrentFavorits] = useState(
+  const [currentFavorites, setCurrentFavorites] = useState(
     JSON.parse(localStorage.getItem("favorites")) || []
   );
+  const iconfull = "♥︎";
+  const iconempty = "♡";
+  const [iconFav, setIconFav] = useState(iconempty);
+
+  // const isFavorite = currentFavorites.includes(randomImage.id);
 
   async function handleClick() {
     const randomImageResponse = await getRandomImage();
     setRandomImage(randomImageResponse);
+    setIconFav(iconempty);
   }
 
   function handleClickFavorites() {
@@ -31,8 +37,16 @@ function App() {
     }
     // Add to a new array (not .push method) to keep immutability
     const newFavorites = [...favorites, randomImage.id];
-    setCurrentFavorits(newFavorites);
+    setCurrentFavorites(newFavorites);
     localStorage.setItem("favorites", JSON.stringify(newFavorites));
+    setIconFav(iconfull);
+  }
+
+  function handleClickFavoritesRemove(id) {
+    const newFavorites = currentFavorites.filter((item) => item !== id);
+    localStorage.setItem("favorites", JSON.stringify(newFavorites));
+    setCurrentFavorites(newFavorites);
+    setIconFav(iconempty);
   }
 
   return (
@@ -44,9 +58,14 @@ function App() {
           alt={randomImage.alt_description}
           author={randomImage.user.name}
           onClickFavorites={() => handleClickFavorites()}
+          innerTextIcon={iconFav}
         />
       )}
-      <FavoriteImageList photoIds={currentFavorits} />
+      <FavoriteImageList
+        photoIds={currentFavorites}
+        onClickFavoritesRemove={handleClickFavoritesRemove}
+        innerTextIcon={iconfull}
+      />
     </main>
   );
 }

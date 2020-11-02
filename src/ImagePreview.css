@@ -1,12 +1,29 @@
-.imageContainer {
+.image-container {
   margin: 20px;
   text-align: center;
+  position: relative;
 }
 
-.imageThumb {
+.image__thumb {
   width: 300px;
   height: 300px;
   object-fit: cover;
   object-position: center;
   border-radius: 5px;
+}
+
+.btn__favorites {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  height: 36px;
+  width: 36px;
+  border-radius: 50%;
+  border: none;
+  background-color: rgba(255, 75, 75, 0.5);
+  font-size: 1.5rem;
+}
+
+.btn__favorites:hover {
+  background-color: rgba(255, 0, 0, 0.5);
 }
